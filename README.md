@@ -12,7 +12,7 @@ Hệ thống Web API phân loại hình ảnh sử dụng mô hình **Vision Tra
 | **MSSV** | 24120152 |
 | **Lớp** | 24CTT5 |
 | **Môn học** | Tư Duy Tính Toán |
-| **Giảng viên** | Ths. Lê Đức Khoan |
+| **Giảng viên** | ThS. Lê Đức Khoan |
 
 ---
 
@@ -112,6 +112,52 @@ Mở trình duyệt và truy cập:
 | http://localhost:8000/health | Kiểm tra trạng thái |
 | http://localhost:8000/docs | Giao diện Swagger UI (test trực tiếp) |
 
+---
+
+## Hướng dẫn gọi API
+
+### GET / — Thông tin API
+
+**Request:**
+```bash
+curl http://localhost:8000/
+```
+
+**Response:**
+```json
+{
+  "name": "Image Classification API",
+  "model": "google/vit-base-patch16-224"
+}
+```
+
+---
+
+### GET /health — Kiểm tra trạng thái
+
+**Request:**
+```bash
+curl http://localhost:8000/health
+```
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "model_loaded": true
+}
+```
+
+---
+
+### POST /predict/url — Phân loại ảnh từ URL
+
+**Request body:**
+
+| Trường | Kiểu | Bắt buộc | Mô tả |
+|--------|------|----------|-------|
+| `url` | string | Có | Đường dẫn URL đến ảnh |
+| `top_k` | integer | Không | Số lượng kết quả (1–10, mặc định: 5) |
 
 ---
 
