@@ -27,6 +27,21 @@ Hệ thống Web API phân loại hình ảnh sử dụng mô hình **Vision Tra
 
 **Mô tả:** ViT (Vision Transformer) là mô hình phân loại hình ảnh của Google, được huấn luyện trên tập dữ liệu ImageNet gồm 1000 loại vật thể như chó, mèo, xe hơi, máy bay, v.v. Mô hình nhận ảnh đầu vào và trả về danh sách các nhãn có xác suất cao nhất.
 
+Điểm đặc biệt là thay vì dùng CNN như truyền thống, mô hình này sẽ chia ảnh thành các phần nhỏ để xử lý.
+
+Cụ thể, mỗi ảnh đầu vào sẽ được resize về kích thước 224x224. Sau đó, ảnh được chia thành các patch kích thước 16x16. Như vậy, một ảnh sẽ được tách thành 196 patch, và mỗi patch được xem như một “token” tương tự như một từ trong câu.
+
+Tiếp theo, các patch này sẽ được biến đổi thành vector số, gọi là embedding. Mô hình cũng thêm một token đặc biệt gọi là [CLS] ở đầu để đại diện cho toàn bộ bức ảnh, cùng với thông tin vị trí của từng patch.
+
+Toàn bộ chuỗi này sẽ được đưa vào Transformer Encoder. Tại đây, cơ chế self-attention sẽ giúp mô hình học được mối quan hệ giữa các vùng khác nhau trong ảnh, từ đó hiểu được nội dung tổng thể.
+
+Sau khi đi qua các lớp Transformer, vector của token [CLS] sẽ được đưa qua một lớp fully connected để dự đoán nhãn của ảnh, ví dụ như chó, mèo hoặc các đối tượng khác.
+
+Về quá trình huấn luyện, mô hình này đã được pretrain trên tập dữ liệu rất lớn là ImageNet-21k với hơn 14 triệu ảnh, sau đó được fine-tune lại trên ImageNet với 1000 lớp. Nhờ vậy, mô hình có khả năng nhận diện ảnh khá tốt ngay cả khi áp dụng vào các bài toán thực tế.
+
+Tóm lại, Vision Transformer hoạt động bằng cách biến ảnh thành chuỗi patch và sử dụng self-attention để học mối quan hệ giữa chúng, thay vì dùng các phép tích chập như CNN truyền thống.
+
+
 ---
 
 ## Cấu trúc dự án
@@ -158,6 +173,66 @@ curl http://localhost:8000/health
 |--------|------|----------|-------|
 | `url` | string | Có | Đường dẫn URL đến ảnh |
 | `top_k` | integer | Không | Số lượng kết quả (1–10, mặc định: 5) |
+
+**Ví dụ:**
+```bash
+curl -X POST http://localhost:8000/predict/url \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://images.dog.ceo/breeds/labrador/n02099712_7003.jpg",
+    "top_k": 3
+  }'
+```
+
+**Response:**
+```json
+{
+  "input_url": "https://images.dog.ceo/breeds/labrador/n02099712_7003.jpg",
+  "top_k": 3,
+  "predictions": [
+    { "label": "Labrador retriever", "score": 0.9231 },
+    { "label": "golden retriever",   "score": 0.0412 },
+    { "label": "kuvasz",             "score": 0.0087 }
+  ]
+}
+```
+
+---
+
+### POST /predict/base64 — Phân loại ảnh từ Base64
+
+**Request body:**
+
+| Trường | Kiểu | Bắt buộc | Mô tả |
+|--------|------|----------|-------|
+| `image_base64` | string | Có | Ảnh được mã hóa dạng base64 |
+| `top_k` | integer | Không | Số lượng kết quả (1–10, mặc định: 5) |
+
+**Ví dụ (Python):**
+```python
+import base64, requests
+
+with open("my_image.jpg", "rb") as f:
+    encoded = base64.b64encode(f.read()).decode("utf-8")
+
+response = requests.post("http://localhost:8000/predict/base64", json={
+    "image_base64": encoded,
+    "top_k": 3
+})
+print(response.json())
+```
+
+**Response:**
+```json
+{
+  "top_k": 3,
+  "predictions": [
+    { "label": "tabby cat",   "score": 0.7102 },
+    { "label": "tiger cat",   "score": 0.1893 },
+    { "label": "Persian cat", "score": 0.0421 }
+  ]
+}
+```
 
 ---
 
