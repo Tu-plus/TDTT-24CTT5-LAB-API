@@ -149,6 +149,8 @@ r = requests.post(f"{BASE}/predict/base64", json={
 })
 pretty(r)
 
+#-----------------------------------------------------------------------------------
+
 # Test ảnh có nhiều hơn 2 vật thể — ảnh gồm chó, khăn và mèo (đều có trong 1000 lớp ImageNet)
 # Chú chó có diện tích lớn hơn chú mèo trong ảnh
 
