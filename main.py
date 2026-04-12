@@ -1,4 +1,3 @@
-
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from transformers import pipeline
@@ -51,7 +50,6 @@ def predict_from_url(body: ImageURLInput):
     if body.top_k < 1 or body.top_k > 10:
         raise HTTPException(status_code=400, detail="top_k phai tu 1 den 10.")
     try:
-        # Thêm User-Agent để không bị chặn
         headers = {"User-Agent": "Mozilla/5.0"}
         response = req.get(body.url, timeout=10, headers=headers)
         response.raise_for_status()
