@@ -137,7 +137,7 @@ pretty(r)
 #-----------------------------------------------------------------------------------
 
 # Test ảnh nhận sai — ảnh hoa (không có trong 1000 lớp ImageNet)
-print("TEST — Ảnh người (model sẽ nhận nhãn gần nhất)")
+print("TEST — ảnh hoa (model sẽ nhận nhãn gần nhất)")
 img_bytes = requests.get(
     "https://tse2.mm.bing.net/th/id/OIP.tVDOjEq-v8EMzmbOGWIjNQHaEo?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3",
     headers={"User-Agent": "Mozilla/5.0"}
