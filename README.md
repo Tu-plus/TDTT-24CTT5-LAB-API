@@ -140,10 +140,7 @@ curl http://localhost:8000/
 
 **Response:**
 ```json
-{
-  "name": "Image Classification API",
-  "model": "google/vit-base-patch16-224"
-}
+{"name":"Image Classification API","model":"google/vit-base-patch16-224"}
 ```
 
 ---
@@ -157,10 +154,7 @@ curl http://localhost:8000/health
 
 **Response:**
 ```json
-{
-  "status": "ok",
-  "model_loaded": true
-}
+{"status":"ok","model_loaded":true}
 ```
 
 ---
@@ -172,29 +166,16 @@ curl http://localhost:8000/health
 | Trường | Kiểu | Bắt buộc | Mô tả |
 |--------|------|----------|-------|
 | `url` | string | Có | Đường dẫn URL đến ảnh |
-| `top_k` | integer | Không | Số lượng kết quả (1–10, mặc định: 5) |
+| `top_k` | integer | Không | Số lượng kết quả (1–>10, mặc định: 5) |
 
 **Ví dụ:**
 ```bash
-curl -X POST http://localhost:8000/predict/url \
-  -H "Content-Type: application/json" \
-  -d '{
-    "url": "https://images.dog.ceo/breeds/labrador/n02099712_7003.jpg",
-    "top_k": 3
-  }'
+curl -X POST http://localhost:8000/predict/url -H "Content-Type: application/json" -d "{\"url\":\"https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gatto_europeo4.jpg/1200px-Gatto_europeo4.jpg\",\"top_k\":3}"
 ```
 
 **Response:**
 ```json
-{
-  "input_url": "https://images.dog.ceo/breeds/labrador/n02099712_7003.jpg",
-  "top_k": 3,
-  "predictions": [
-    { "label": "Labrador retriever", "score": 0.9231 },
-    { "label": "golden retriever",   "score": 0.0412 },
-    { "label": "kuvasz",             "score": 0.0087 }
-  ]
-}
+{"input_url":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gatto_europeo4.jpg/1200px-Gatto_europeo4.jpg","top_k":3,"predictions":[{"label":"Egyptian cat","score":0.5545},{"label":"tiger cat","score":0.2216},{"label":"tabby, tabby cat","score":0.2158}]}
 ```
 
 ---
@@ -224,14 +205,7 @@ print(response.json())
 
 **Response:**
 ```json
-{
-  "top_k": 3,
-  "predictions": [
-    { "label": "tabby cat",   "score": 0.7102 },
-    { "label": "tiger cat",   "score": 0.1893 },
-    { "label": "Persian cat", "score": 0.0421 }
-  ]
-}
+{'top_k': 3, 'predictions': [{'label': 'Egyptian cat', 'score': 0.5545}, {'label': 'tiger cat', 'score': 0.2216}, {'label': 'tabby, tabby cat', 'score': 0.2158}]}
 ```
 
 ---
