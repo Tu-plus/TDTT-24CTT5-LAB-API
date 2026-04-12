@@ -240,9 +240,7 @@ python test_api.py
 
 ## Video Demo
 
-
-[![Watch the demo](https://img.youtube.com/vi/ACGv7_nw-Dc/0.jpg)](https://youtu.be/ZYKeR1z3Hpshttps://youtu.be/ACGv7_nw-Dc)
----
+[![Watch the demo](https://img.youtube.com/vi/ZYKeR1z3Hps/0.jpg)](https://youtu.be/ZYKeR1z3Hps)
 
 ## Thư viện sử dụng
 
