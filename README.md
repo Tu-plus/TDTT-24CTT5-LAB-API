@@ -240,8 +240,8 @@ python test_api.py
 
 ## Video Demo
 
-Link video: [Dán link video vào đây]
 
+[![Watch the demo](https://img.youtube.com/vi/ACGv7_nw-Dc/0.jpg)](https://youtu.be/ACGv7_nw-Dc)
 ---
 
 ## Thư viện sử dụng
